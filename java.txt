@@ -1,0 +1,47 @@
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class nhap {
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Data Entry and Table");
+        JPanel panel = new JPanel();
+        DefaultTableModel model = new DefaultTableModel();
+        JTable table = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        model.addColumn("Column 1");
+        model.addColumn("Column 2");
+
+        JTextField textField1 = new JTextField(10);
+        JTextField textField2 = new JTextField(10);
+        JButton addButton = new JButton("Add Data");
+
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String data1 = textField1.getText();
+                String data2 = textField2.getText();
+
+                model.addRow(new Object[] { data1, data2 });
+
+                textField1.setText("");
+                textField2.setText("");
+            }
+        });
+
+        panel.add(new JLabel("Data 1: "));
+        panel.add(textField1);
+        panel.add(new JLabel("Data 2: "));
+        panel.add(textField2);
+        panel.add(addButton);
+
+        frame.add(panel);
+        frame.add(scrollPane);
+        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+        frame.setVisible(true);
+    }
+}
