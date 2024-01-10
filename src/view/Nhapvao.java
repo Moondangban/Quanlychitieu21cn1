@@ -15,6 +15,7 @@ public class Nhapvao extends javax.swing.JInternalFrame {
      */
     public Nhapvao() {
         initComponents();
+        
     }
 
     /**
@@ -28,6 +29,9 @@ public class Nhapvao extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
 
+        setFrameIcon(null);
+        setInheritsPopupMenu(true);
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setText("nhap vao");
 
@@ -38,14 +42,14 @@ public class Nhapvao extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(169, 169, 169)
                 .addComponent(jLabel1)
-                .addContainerGap(194, Short.MAX_VALUE))
+                .addContainerGap(203, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(134, 134, 134)
                 .addComponent(jLabel1)
-                .addContainerGap(212, Short.MAX_VALUE))
+                .addContainerGap(222, Short.MAX_VALUE))
         );
 
         pack();

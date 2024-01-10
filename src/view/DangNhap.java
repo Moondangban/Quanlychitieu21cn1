@@ -1,7 +1,9 @@
 
 package view;
-
-
+import javax.swing.JOptionPane;
+import main.UserModify;
+import main.Utility;
+import main.Users;
 public class DangNhap extends javax.swing.JFrame {
 
     
@@ -25,9 +27,9 @@ public class DangNhap extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        usernameTxt = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        passwordTxt = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -86,9 +88,9 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Tên đăng nhập");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        usernameTxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                usernameTxtActionPerformed(evt);
             }
         });
 
@@ -97,6 +99,11 @@ public class DangNhap extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(0, 102, 102));
         jButton1.setText("Đăng nhập");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(51, 255, 204));
         jButton2.setText("Đăng ký");
@@ -119,14 +126,14 @@ public class DangNhap extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(usernameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(jLabel3))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(passwordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(63, 63, 63)
@@ -145,11 +152,11 @@ public class DangNhap extends javax.swing.JFrame {
                 .addGap(47, 47, 47)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(usernameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(passwordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
@@ -182,9 +189,9 @@ public class DangNhap extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void usernameTxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameTxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_usernameTxtActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -194,6 +201,21 @@ public class DangNhap extends javax.swing.JFrame {
         dangky.setLocationRelativeTo(null); 
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String username = usernameTxt.getText();
+        String password = passwordTxt.getText();
+        password = Utility.getSecurityMD5(password); 
+        Users user = UserModify.login(username, password);
+        if (user == null) {
+            JOptionPane.showMessageDialog(rootPane, "Tài khoản không tồn tại , vui lòng kiểm tra lại!");
+        new DangNhap().setVisible(true);    
+        }else{
+          java.awt.EventQueue.invokeLater(() -> new Trangchu().setVisible(true));  
+        }
+        dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     
     public static void main(String args[]) {
@@ -239,8 +261,8 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField passwordTxt;
     private javax.swing.JPanel right;
+    private javax.swing.JTextField usernameTxt;
     // End of variables declaration//GEN-END:variables
 }
