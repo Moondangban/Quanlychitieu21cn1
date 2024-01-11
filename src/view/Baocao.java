@@ -4,6 +4,8 @@
  */
 package view;
 
+import javax.swing.plaf.basic.BasicInternalFrameUI;
+
 /**
  *
  * @author Phuong Thao
@@ -15,6 +17,9 @@ public class Baocao extends javax.swing.JInternalFrame {
      */
     public Baocao() {
         initComponents();
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder (0,0,0,0));
+        BasicInternalFrameUI ui= (BasicInternalFrameUI)this.getUI();
+        ui.setNorthPane (null);
     }
 
     /**
@@ -38,14 +43,14 @@ public class Baocao extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(195, 195, 195)
                 .addComponent(jLabel1)
-                .addContainerGap(192, Short.MAX_VALUE))
+                .addContainerGap(452, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(128, 128, 128)
                 .addComponent(jLabel1)
-                .addContainerGap(218, Short.MAX_VALUE))
+                .addContainerGap(232, Short.MAX_VALUE))
         );
 
         pack();
