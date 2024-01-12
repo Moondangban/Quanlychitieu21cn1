@@ -35,8 +35,8 @@ public class UserModify {
                 Users u = new Users(
                         resultSet.getString("username"),
                         resultSet.getString("email"),
-                        resultSet.getString("password"),
-                        resultSet.getString("phone")
+                        resultSet.getString("phone"),
+                        resultSet.getString("password")
                         
                 );
                 dataList.add(u);
@@ -82,8 +82,8 @@ public class UserModify {
                 user = new Users(
                         resultSet.getString("username"),
                         resultSet.getString("email"),
-                        resultSet.getString("password"),
-                        resultSet.getString("phone")
+                        resultSet.getString("phone"),
+                        resultSet.getString("password")
                         
                 );
             }
@@ -146,7 +146,7 @@ public class UserModify {
             }
         }
     }
-
+    
     public static void update(Users user) {
         Connection conn = null;
         PreparedStatement statement = null;
