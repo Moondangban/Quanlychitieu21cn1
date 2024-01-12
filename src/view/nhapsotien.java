@@ -1,5 +1,6 @@
-package phides;
+package view;
 
+import phides.*;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -296,7 +297,7 @@ public class nhapsotien extends javax.swing.JFrame {
         double a = 0;
         double b = 0;
         double sum = 0;
-        
+       
         
 
         try {
