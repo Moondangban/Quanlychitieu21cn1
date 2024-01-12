@@ -1,8 +1,10 @@
 package phides;
 
+import javax.swing.JOptionPane;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
+import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
@@ -11,6 +13,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.DocumentFilter;
+
 
 public class nhapsotien extends javax.swing.JFrame {
     private double totalSum = 0;
@@ -26,6 +29,7 @@ public class nhapsotien extends javax.swing.JFrame {
 
         // Áp dụng DocumentFilter cho chitextField
         ((AbstractDocument) chitextField.getDocument()).setDocumentFilter(new NumberFilter());
+        
         
     }
 
@@ -52,8 +56,8 @@ public class nhapsotien extends javax.swing.JFrame {
         noteTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        editButton9 = new javax.swing.JButton();
+        deleteButton10 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -192,9 +196,8 @@ public class nhapsotien extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addGap(6, 6, 6)
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(51, 51, 51)
+                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(68, 68, 68)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(noteTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -222,9 +225,19 @@ public class nhapsotien extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton9.setText("Sửa");
+        editButton9.setText("Sửa");
+        editButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButton9ActionPerformed(evt);
+            }
+        });
 
-        jButton10.setText("xóa");
+        deleteButton10.setText("xóa");
+        deleteButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButton10ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -236,23 +249,23 @@ public class nhapsotien extends javax.swing.JFrame {
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 758, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton9)
-                    .addComponent(jButton10))
+                    .addComponent(editButton9)
+                    .addComponent(deleteButton10))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(jButton9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(111, 111, 111)
+                        .addComponent(editButton9)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton10)
-                        .addGap(235, 235, 235))
+                        .addComponent(deleteButton10)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
@@ -282,16 +295,18 @@ public class nhapsotien extends javax.swing.JFrame {
             // Lấy giá trị từ thutextField, nếu rỗng thì mặc định a là 0
             String thuNhapText = thutextField.getText().trim();
             String chiTieuText = chitextField.getText().trim();
+            String calender =((JTextField)jDateChooser1.getDateEditor()).getText() ;
+            
             a = thuNhapText.isEmpty() ? 0 : Double.parseDouble(thuNhapText);
             
             // Thêm chuỗi được định dạng vào jTable1
             if (!thuNhapText.isEmpty()) {
                 // Thêm chuỗi được định dạng với dấu "+" và màu xanh vào jTable1
-                model.addRow(new Object[]{"<html><font color='green'>+ " + thuNhapText + "</font></html>",jDateChooser1.getDate(), noteTextField1.getText()});
+                model.addRow(new Object[]{"<html><font color='green'>+ " + thuNhapText + "</font></html>",noteTextField1.getText(),calender});
             }
             if (!chiTieuText.isEmpty()) {
                 // Thêm chuỗi được định dạng với dấu "+" và màu xanh vào jTable1
-                model.addRow(new Object[]{"<html><font color='red'>- " + chiTieuText + "</font></html>",jDateChooser1.getDate(), noteTextField1.getText()});
+                model.addRow(new Object[]{"<html><font color='red'>- " + chiTieuText + "</font></html>",noteTextField1.getText(),calender});
             }
 
             // Lấy giá trị từ chitextField
@@ -316,11 +331,79 @@ public class nhapsotien extends javax.swing.JFrame {
         
         
         
-        // Làm mới thutextField và chitextField
-        thutextField.setText("");
-        chitextField.setText("");
+        // Làm mới noteTextFiled1
+        noteTextField1.setText("");
+
+        
+ 
+        
+        // Làm mới mô hình bảng để phản ánh các thay đổi
+        model.fireTableDataChanged();
+        
+        // Làm mới thutextField trong jPanel3
+        Document chiDocument = thutextField.getDocument();
+        Document tieuDocument = chitextField.getDocument();
+
+        try {
+            chiDocument.remove(0, chiDocument.getLength());
+            tieuDocument.remove(0, tieuDocument.getLength());
+        } catch (BadLocationException ex) {
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_tinhtongButtonActionPerformed
 
+    private void editButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButton9ActionPerformed
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow != -1) {
+        // Lấy thông tin từ dòng được chọn và hiển thị nó trong các thành phần nhập liệu
+        String type = (String) jTable1.getValueAt(selectedRow, 0);
+        String note = (String) jTable1.getValueAt(selectedRow, 1);
+        String time = (String) jTable1.getValueAt(selectedRow, 2);
+        }
+    }//GEN-LAST:event_editButton9ActionPerformed
+
+    private void deleteButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButton10ActionPerformed
+        int selectedRow = jTable1.getSelectedRow();
+        if (selectedRow != -1) {
+            int option = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                // Lấy thông tin giao dịch và cập nhật totalSum
+                DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+                String type = (String) model.getValueAt(selectedRow, 0);
+                double deletedAmount = extractAmountFromType(type);
+                boolean isExpense = type.contains("red"); // Kiểm tra xem có phải chi tiêu không
+
+                // Thực hiện phép tính cộng hoặc trừ tùy thuộc vào loại giao dịch
+                if (isExpense) {
+                    totalSum += deletedAmount; // Nếu là chi tiêu, cộng vào totalSum
+                } else {
+                    totalSum -= deletedAmount; // Nếu là thu nhập, trừ khỏi totalSum
+                }
+
+                // Xóa dòng được chọn từ bảng
+                model.removeRow(selectedRow);
+
+                    // Cập nhật nhãn tổng số
+                updateTotalSumLabel();
+            }
+        }
+    }//GEN-LAST:event_deleteButton10ActionPerformed
+    
+
+    
+    
+    private double extractAmountFromType(String type) {
+       // Bạn cần thực hiện phương thức này dựa trên cấu trúc dữ liệu thực tế của bạn
+        // Ví dụ: "<html><font color='green'>+ 200.0</font></html>"
+        // Trích xuất "200.0" từ chuỗi loại và chuyển đổi nó thành double
+        // Trả về số tiền đã trích xuất
+        return Double.parseDouble(type.replaceAll("[^0-9.]+", ""));
+    }
+    
+    private void updateTotalSumLabel() {
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+        tienLabel.setText(currencyFormat.format(totalSum));
+    }
     private Object currencyFormat(String string) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -366,8 +449,8 @@ public class nhapsotien extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField chitextField;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton deleteButton10;
+    private javax.swing.JButton editButton9;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
