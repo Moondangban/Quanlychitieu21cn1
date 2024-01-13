@@ -48,7 +48,8 @@ public class Trangchu extends javax.swing.JFrame {
         jpnView = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1012, 640));
+
+        jpnRoot.setBackground(new java.awt.Color(255, 255, 255));
 
         jpnMenu.setBackground(new java.awt.Color(255, 153, 153));
 
@@ -244,6 +245,7 @@ public class Trangchu extends javax.swing.JFrame {
         );
 
         jpnView.setBackground(new java.awt.Color(255, 255, 255));
+        jpnView.setPreferredSize(new java.awt.Dimension(843, 555));
 
         javax.swing.GroupLayout jpnViewLayout = new javax.swing.GroupLayout(jpnView);
         jpnView.setLayout(jpnViewLayout);
