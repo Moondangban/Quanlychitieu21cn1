@@ -4,22 +4,71 @@
  */
 package view;
 
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
+import java.util.Vector;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
+import javax.swing.table.DefaultTableModel;
+import service.ConnectionDB;
+import java.sql.Connection;
+import service.Contants;
 
 /**
  *
  * @author Phuong Thao
  */
 public class Thongke extends javax.swing.JInternalFrame {
-
     /**
-     * Creates new form Thongke
+     * Creates new form 
      */
+            
+    final String[] header = {"Loại","Số tiền","Ghi chú","Thời gian"};
+    final DefaultTableModel tb = new DefaultTableModel(header,0);
+    
+    ConnectionDB cn = new ConnectionDB();
+    Connection conn;
+    
+    public void loadbang(){
+        try {
+            conn = cn.getConnection();
+            int number;
+            Vector rowVector;
+            
+            String sql = "select if(Type = 1, 'Thu', 'Chi') TypeName, if(Type = 1, Price, Price * -1) PriceText, "
+                    + " Note, Time "
+                    + " from manager_purse "
+                    + " where status = 1 and User_ID = " + Contants.userId;
+            
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            ResultSetMetaData metaData = rs.getMetaData();
+            number = metaData.getColumnCount();
+            tb.setRowCount(0);
+            while (rs.next()) {
+                Vector row = new Vector();
+                for(int i = 1; i<= number;i++){
+                    row.addElement(rs.getString(i));
+                }
+                tb.addRow(row);
+                bangthongke.setModel(tb);
+            }
+            st.close();
+            rs.close();
+            conn.close();
+                
+            
+        } catch (Exception e) {
+        }
+        
+    }
     public Thongke() {
         initComponents();
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder (0,0,0,0));
         BasicInternalFrameUI ui= (BasicInternalFrameUI)this.getUI();
         ui.setNorthPane (null);
+        
+        loadbang();
     }
 
     /**
@@ -34,18 +83,14 @@ public class Thongke extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        bangthongke = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         editButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        bangthongke.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -56,7 +101,7 @@ public class Thongke extends javax.swing.JInternalFrame {
                 "Thu/ Chi", "Note", "Time"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(bangthongke);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 204, 153));
@@ -71,9 +116,9 @@ public class Thongke extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 825, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 761, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -82,7 +127,7 @@ public class Thongke extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton2)))
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(0, 0, 0))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,7 +135,7 @@ public class Thongke extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editButton)
@@ -127,12 +172,12 @@ public class Thongke extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable bangthongke;
     private javax.swing.JButton editButton;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

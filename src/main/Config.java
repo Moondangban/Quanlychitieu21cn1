@@ -9,7 +9,7 @@ package main;
  * @author Phuong Thao
  */
 public interface Config {
-    String DB_URL = "jdbc:mysql://localhost:3306/users";
+    String DB_URL = "jdbc:mysql://localhost:3307/quanlythuchi";
     String USERNAME = "root";
     String PASSWORD = "";
     //Chuoi nay -> go sao cung duoc

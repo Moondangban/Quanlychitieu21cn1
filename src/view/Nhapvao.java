@@ -16,6 +16,9 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.DocumentFilter;
 import java.awt.Color;
+import service.ConnectionDB;
+import service.Contants;
+import service.PurseService;
 
 
 /**
@@ -30,15 +33,16 @@ public class Nhapvao extends javax.swing.JInternalFrame {
 
     public Nhapvao() {
         initComponents();
-        
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder (0,0,0,0));
-        BasicInternalFrameUI ui= (BasicInternalFrameUI)this.getUI();
-        ui.setNorthPane (null);
+
         // Áp dụng DocumentFilter cho thutextField
         ((AbstractDocument) thutextField.getDocument()).setDocumentFilter(new NumberFilter());
 
         // Áp dụng DocumentFilter cho chitextField
         ((AbstractDocument) chitextField.getDocument()).setDocumentFilter(new NumberFilter());
+        
+        PurseService purseService = new PurseService();
+        String priceText = purseService.getPriceText(Contants.userId);
+        tienLabel.setText(priceText);
              
     }
 
@@ -68,7 +72,8 @@ public class Nhapvao extends javax.swing.JInternalFrame {
         setFrameIcon(null);
         setInheritsPopupMenu(true);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(248, 241, 241));
+        jPanel1.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.setPreferredSize(new java.awt.Dimension(531, 430));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -124,9 +129,11 @@ public class Nhapvao extends javax.swing.JInternalFrame {
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Time");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Note");
 
         jPanel4.setBackground(new java.awt.Color(102, 102, 102));
@@ -190,7 +197,7 @@ public class Nhapvao extends javax.swing.JInternalFrame {
                                 .addGap(81, 81, 81)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 143, Short.MAX_VALUE))))
+                        .addGap(0, 31, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,20 +223,21 @@ public class Nhapvao extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tinhtongButton)
                     .addComponent(jLabel3))
-                .addContainerGap(274, Short.MAX_VALUE))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 831, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 719, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -237,6 +245,23 @@ public class Nhapvao extends javax.swing.JInternalFrame {
 
     
     private void tinhtongButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tinhtongButtonActionPerformed
+        PurseService purseService = new PurseService();
+        
+        String priceString = tienLabel.getText();
+        
+        if(!thutextField.getText().trim().isBlank()){
+            purseService.create(Contants.userId, 1, Integer.parseInt(thutextField.getText().trim()),
+                    noteTextField1.getText(), jDateChooser1.getDate());
+            
+            tienLabel.setText(String.valueOf(Integer.parseInt(priceString)+Integer.parseInt(thutextField.getText().trim())));
+        }
+        else if(!chitextField.getText().trim().isBlank()){
+            purseService.create(Contants.userId, 2, Integer.parseInt(chitextField.getText().trim()),
+                    noteTextField1.getText(), jDateChooser1.getDate());
+            
+            tienLabel.setText(String.valueOf(Integer.parseInt(priceString)-Integer.parseInt(chitextField.getText().trim())));
+        }
+        
         double a = 0;
         double b = 0;
         double sum = 0;
@@ -265,7 +290,7 @@ public class Nhapvao extends javax.swing.JInternalFrame {
 
         // Định dạng số theo kiểu tiền tệ và hiển thị trong tientextField
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-        tienLabel.setText(currencyFormat.format(totalSum));
+        //tienLabel.setText(currencyFormat.format(totalSum));
         
         // Kiểm tra nếu totalSum < 0 và đổi màu chữ thành đỏ
         if (totalSum < 0) {

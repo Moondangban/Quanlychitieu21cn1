@@ -9,7 +9,9 @@ package main;
  * @author Phuong Thao
  */
 public class Users {
-String username, email, password,phone;
+    String username, email, password,phone;
+    int ID;
+    int Purse;
     
 
     public Users() {
@@ -21,6 +23,15 @@ String username, email, password,phone;
         this.password = password;
         this.phone = phone;
         
+    }
+    
+    
+    public Users(String username, String email, String phone, String password, int ID) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.phone = phone;
+        this.ID = ID;
     }
 
     public String getUsername() {
@@ -54,5 +65,21 @@ String username, email, password,phone;
     public void setPhone(String phone) {
         this.phone = phone;
     }
-     
+    
+    
+    public void setID(int ID){
+        this.ID = ID;
+    }
+    
+    public int getID(){
+        return ID;
+    }
+    
+    public void setPurse(int Purse){
+        this.Purse = Purse;
+    }
+    
+    public int getPurse(){
+        return Purse;
+    }
 }
