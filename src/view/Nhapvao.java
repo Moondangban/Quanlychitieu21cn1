@@ -16,6 +16,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.DocumentFilter;
 import java.awt.Color;
+import phides.nhapsotien;
 
 
 /**
@@ -23,21 +24,50 @@ import java.awt.Color;
  * @author Phuong Thao
  */
 public class Nhapvao extends javax.swing.JInternalFrame {
+    
     private double totalSum = 0;
+    private DefaultTableModel tableModel;
     
-    
-
-
     public Nhapvao() {
+        // Đảm bảo initComponents() đã được gọi và thutextField, chitextField đã được khởi tạo
         initComponents();
 
-        // Áp dụng DocumentFilter cho thutextField
-        ((AbstractDocument) thutextField.getDocument()).setDocumentFilter(new NumberFilter());
+        // Kiểm tra xem thutextField và chitextField có giá trị không
+        if (thutextField != null && chitextField != null) {
+            // Áp dụng DocumentFilter cho thutextField
+            ((AbstractDocument) thutextField.getDocument()).setDocumentFilter(new nhapsotien.NumberFilter());
 
-        // Áp dụng DocumentFilter cho chitextField
-        ((AbstractDocument) chitextField.getDocument()).setDocumentFilter(new NumberFilter());
-             
+            // Áp dụng DocumentFilter cho chitextField
+            ((AbstractDocument) chitextField.getDocument()).setDocumentFilter(new nhapsotien.NumberFilter());
+        } else {
+            // Xử lý nếu thutextField hoặc chitextField là null
+            System.err.println("Error: thutextField or chitextField is null.");
     }
+        
+        
+    }
+    
+    private Thongke thongkeFrame;
+
+    public Nhapvao(Thongke thongkeFrame) {
+        this.thongkeFrame = thongkeFrame;
+        initComponents();
+    }
+    
+    // Thêm phương thức này vào lớp Nhapvao
+    public Object[] getNhapvaoData() {
+        Object[] rowData = new Object[4];
+        rowData[0] = thutextField.getText();
+        rowData[1] = chitextField.getText();
+        rowData[2] = noteTextField1.getText();
+        rowData[3] = jDateChooser1.getDate();
+        return rowData;
+    }
+
+
+    
+    
+
 
     
     @SuppressWarnings("unchecked")
@@ -59,7 +89,6 @@ public class Nhapvao extends javax.swing.JInternalFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         tinhtongButton = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setFrameIcon(null);
@@ -159,8 +188,6 @@ public class Nhapvao extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel3.setText("jLabel3");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -185,10 +212,7 @@ public class Nhapvao extends javax.swing.JInternalFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(tinhtongButton)
-                                .addGap(81, 81, 81)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(tinhtongButton)
                             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 31, Short.MAX_VALUE))))
         );
@@ -213,9 +237,7 @@ public class Nhapvao extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tinhtongButton)
-                    .addComponent(jLabel3))
+                .addComponent(tinhtongButton)
                 .addContainerGap(155, Short.MAX_VALUE))
         );
 
@@ -246,8 +268,19 @@ public class Nhapvao extends javax.swing.JInternalFrame {
 
             // Lấy giá trị từ thutextField, nếu rỗng thì mặc định a là 0
             String thuNhapText = thutextField.getText().trim();
+            String chiTieuText = chitextField.getText().trim();
+            String calender =((JTextField)jDateChooser1.getDateEditor()).getText() ;
+            
+            a = thuNhapText.isEmpty() ? 0 : Double.parseDouble(thuNhapText);
+            
+            // Thêm chuỗi được định dạng vào jTable1
             if (!thuNhapText.isEmpty()) {
-                a = Double.parseDouble(thuNhapText);
+                // Thêm chuỗi được định dạng với dấu "+" và màu xanh vào jTable1
+                model.addRow(new Object[]{"<html><font color='green'>+ " + thuNhapText + "</font></html>",noteTextField1.getText(),calender});
+            }
+            if (!chiTieuText.isEmpty()) {
+                // Thêm chuỗi được định dạng với dấu "+" và màu xanh vào jTable1
+                model.addRow(new Object[]{"<html><font color='red'>- " + chiTieuText + "</font></html>",noteTextField1.getText(),calender});
             }
 
             // Lấy giá trị từ chitextField
@@ -255,6 +288,8 @@ public class Nhapvao extends javax.swing.JInternalFrame {
 
             // Lấy giá trị từ tientextField
             sum = Double.parseDouble(tienLabel.getText());
+            
+            
         } catch (NumberFormatException e) {
             // Xử lý trường hợp nhập không đúng định dạng double
             // Bạn có thể hiển thị thông báo lỗi hoặc thực hiện hành động phù hợp
@@ -289,6 +324,14 @@ public class Nhapvao extends javax.swing.JInternalFrame {
             tieuDocument.remove(0, tieuDocument.getLength());;
         } catch (BadLocationException ex) {
         }
+        
+        // Gọi method hoặc set giá trị trong Thongke
+        thongkeFrame.updateDataFromNhapvao(totalSum);
+        
+        
+        // Gọi phương thức để lấy dữ liệu từ Nhapvao và thêm vào Thongke
+        Object[] rowData = getNhapvaoData();
+        thongkeFrame.addNhapvaoData(rowData);
     }//GEN-LAST:event_tinhtongButtonActionPerformed
 
 
@@ -352,7 +395,6 @@ public class Nhapvao extends javax.swing.JInternalFrame {
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
