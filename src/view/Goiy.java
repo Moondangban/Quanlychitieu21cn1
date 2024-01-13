@@ -60,7 +60,7 @@ private double totalMoney;
         jButton1 = new javax.swing.JButton();
         panelBarChart = new javax.swing.JPanel();
 
-        jPanel1.setBackground(new java.awt.Color(0, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
