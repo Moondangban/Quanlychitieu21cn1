@@ -96,7 +96,7 @@ public class Thongtincanhan extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         passwordField = new javax.swing.JTextField();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(153, 255, 204));
 
         jLabel1.setFont(new java.awt.Font("Yu Gothic Medium", 1, 18)); // NOI18N
         jLabel1.setText("Thông tin cá nhân");

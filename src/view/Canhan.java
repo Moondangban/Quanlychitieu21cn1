@@ -23,6 +23,7 @@ public class Canhan extends javax.swing.JInternalFrame {
         ui.setNorthPane (null);
     }
 
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,7 +45,7 @@ public class Canhan extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel4.setBackground(new java.awt.Color(255, 204, 204));
+        jPanel4.setBackground(new java.awt.Color(102, 255, 204));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 51));
         jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
