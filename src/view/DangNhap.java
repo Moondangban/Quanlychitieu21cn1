@@ -4,6 +4,8 @@ import javax.swing.JOptionPane;
 import main.UserModify;
 import main.Utility;
 import main.Users;
+import service.ConnectionDB;
+import service.Contants;
 public class DangNhap extends javax.swing.JFrame {
 
     
@@ -213,6 +215,8 @@ public class DangNhap extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Tài khoản không tồn tại , vui lòng kiểm tra lại!");
         new DangNhap().setVisible(true);    
         }else{
+            Contants.userId = user.getID();
+            
           java.awt.EventQueue.invokeLater(() -> new Trangchu().setVisible(true));  
         }
         dispose();

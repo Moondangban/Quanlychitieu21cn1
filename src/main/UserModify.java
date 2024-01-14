@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.Statement;
+import service.Contants;
 /**
  *
  * @author Phuong Thao
@@ -35,8 +37,8 @@ public class UserModify {
                 Users u = new Users(
                         resultSet.getString("username"),
                         resultSet.getString("email"),
-                        resultSet.getString("phone"),
-                        resultSet.getString("password")
+                        resultSet.getString("password"),
+                        resultSet.getString("phone")
                         
                 );
                 dataList.add(u);
@@ -82,9 +84,9 @@ public class UserModify {
                 user = new Users(
                         resultSet.getString("username"),
                         resultSet.getString("email"),
+                        resultSet.getString("password"),
                         resultSet.getString("phone"),
-                        resultSet.getString("password")
-                        
+                        resultSet.getInt("ID")
                 );
             }
         } catch (SQLException ex) {
@@ -116,17 +118,31 @@ public class UserModify {
         try {
             conn = DriverManager.getConnection(Config.DB_URL, Config.USERNAME, Config.PASSWORD);
 
-            String sql = "insert into users (username, email, password, phone) "
-                    + "values (?, ?, ?, ?)";
+            String sql = "insert into users (username, email, password, phone, purse) "
+                    + "values (?, ?, ?, ?,?)";
             statement = conn.prepareStatement(sql);
 
             statement.setString(1, user.getUsername());
             statement.setString(2, user.getEmail());
             statement.setString(3, user.getPassword());
             statement.setString(4, user.getPhone());
+            statement.setInt(5, 0);
             
 
             statement.execute();
+            
+            //Add Contants.userId
+            String sqlGetUserId = "select ID from `users` where username = '" + user.getUsername() + "'";
+                    
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sqlGetUserId);
+
+            int userId = 0;
+
+            while (rs.next()){
+                Contants.userId = rs.getInt("ID");
+            }
+        
         } catch (SQLException ex) {
             Logger.getLogger(UserModify.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -146,7 +162,7 @@ public class UserModify {
             }
         }
     }
-    
+
     public static void update(Users user) {
         Connection conn = null;
         PreparedStatement statement = null;
