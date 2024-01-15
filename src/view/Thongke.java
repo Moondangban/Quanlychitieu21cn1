@@ -13,21 +13,96 @@ import javax.swing.table.DefaultTableModel;
 import service.ConnectionDB;
 import java.sql.Connection;
 import service.Contants;
+// Thêm lệnh import này
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import javax.swing.JFrame;
+
 
 /**
  *
  * @author Phuong Thao
  */
+
+
+
+
 public class Thongke extends javax.swing.JInternalFrame {
     /**
      * Creates new form 
      */
-            
+    
+    private Nhapvao nhapvaoFrame;
+
+    // Thêm constructor để nhận tham chiếu đến Nhapvao.java
+    public Thongke(Nhapvao nhapvaoFrame) {
+        this.nhapvaoFrame = nhapvaoFrame;
+        initComponents();
+        // Khởi tạo nhapvaoFrame ở đây hoặc tại bất kỳ điểm nào thích hợp
+        //this.nhapvaoFrame = new Nhapvao();
+        //this.nhapvaoFrame.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // ... (Các dòng code khác trong constructor)
+    }
+    
+    // Thêm phương thức để thiết lập giá trị cho nhapvaoFrame
+    public void setNhapvaoFrame(Nhapvao nhapvaoFrame) {
+        this.nhapvaoFrame = nhapvaoFrame;
+    }
+    
+    public interface DataUpdatedListener {
+    void onDataUpdated();
+}
+
+    private DataUpdatedListener dataUpdatedListener;
+
+    
+    public void setDataUpdatedListener(DataUpdatedListener listener) {
+        this.dataUpdatedListener = listener;
+    }
+    
+    
+    public void updateData() {
+        // Cập nhật dữ liệu trong cửa sổ Thongke
+        loadbang();
+    }
+    
+    
+    
     final String[] header = {"Loại","Số tiền","Ghi chú","Thời gian"};
     final DefaultTableModel tb = new DefaultTableModel(header,0);
     
     ConnectionDB cn = new ConnectionDB();
     Connection conn;
+    
+    
+    public Thongke() {
+        initComponents();
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
+        ui.setNorthPane(null);
+
+        loadbang();
+    }
+    
+    
+    public void addDataUpdatedListenerToEditFrame(editFrame editFrame) {
+        editFrame.setDataUpdatedListener(new editFrame.DataUpdatedListener() {
+            @Override
+            public void onDataUpdated(String type, String price, String note, String time) {
+                // Xử lý cập nhật dữ liệu vào bảng
+                // Có thể thêm mã ở đây để cập nhật dữ liệu vào bảng thống kê
+                // Ví dụ: tb.addRow(new Object[]{type, price, note, time});
+                // Sau đó gọi loadbang() để cập nhật bảng
+                loadbang();
+            }
+        });
+    }
+    
+    
+    
     
     public void loadbang(){
         try {
@@ -62,14 +137,7 @@ public class Thongke extends javax.swing.JInternalFrame {
         }
         
     }
-    public Thongke() {
-        initComponents();
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder (0,0,0,0));
-        BasicInternalFrameUI ui= (BasicInternalFrameUI)this.getUI();
-        ui.setNorthPane (null);
-        
-        loadbang();
-    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -108,8 +176,18 @@ public class Thongke extends javax.swing.JInternalFrame {
         jLabel1.setText("Thống kê");
 
         editButton.setText("Edit");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Delete");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -170,6 +248,112 @@ public class Thongke extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        // Lấy hàng được chọn
+        int selectedRow = bangthongke.getSelectedRow();
+        if (selectedRow != -1) {
+            // Lấy dữ liệu từ hàng được chọn
+            String type = (String) tb.getValueAt(selectedRow, 0);
+            String price = (String) tb.getValueAt(selectedRow, 1);
+            String note = (String) tb.getValueAt(selectedRow, 2);
+            String time = (String) tb.getValueAt(selectedRow, 3);
+
+            // Mở editFrame và chuyển dữ liệu
+            editFrame edit = new editFrame(type, price, note, time);
+            edit.setVisible(true);
+        } else {
+            // Xử lý trường hợp khi không có hàng nào được chọn
+            System.out.println("Không có hàng nào được chọn");
+        }
+    }//GEN-LAST:event_editButtonActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       
+     // Lấy chỉ số hàng được chọn
+    int selectedRow = bangthongke.getSelectedRow();
+
+    
+    
+    
+    if (selectedRow != -1 ) {
+        try {
+            // Kết nối đến cơ sở dữ liệu
+            conn = cn.getConnection();
+
+            // Lấy giá trị của các cột từ hàng được chọn
+            String type = (String) tb.getValueAt(selectedRow, 0);
+            String priceText = (String) tb.getValueAt(selectedRow, 1);
+            String note = (String) tb.getValueAt(selectedRow, 2);
+            String time = (String) tb.getValueAt(selectedRow, 3);
+
+            // Xóa dữ liệu từ cơ sở dữ liệu
+            String deleteSQL = "DELETE FROM manager_purse WHERE Type = ? AND Price = ? AND Note = ? AND Time = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(deleteSQL)) {
+                pstmt.setString(1, type);
+                pstmt.setString(2, priceText);
+                pstmt.setString(3, note);
+                pstmt.setString(4, time);
+                pstmt.executeUpdate();
+            }
+
+            // Xóa hàng được chọn từ mô hình bảng
+            tb.removeRow(selectedRow);
+
+            // Cập nhật bảng với mô hình đã được sửa đổi
+            bangthongke.setModel(tb);
+
+            
+            // Thông báo về sự thay đổi dữ liệu
+                if (dataUpdatedListener != null) {
+                    dataUpdatedListener.onDataUpdated();
+                }
+            
+            
+            if (nhapvaoFrame != null) {
+                // Gọi phương thức cập nhật dữ liệu trong Nhapvao.java
+                nhapvaoFrame.updateData();
+            } else {
+        System.out.println("NhapvaoFrame là null");
+    }
+            nhapvaoFrame.updateData();
+        } catch (SQLException e) {
+            // Xử lý ngoại lệ nếu có lỗi xảy ra trong quá trình thực hiện SQL
+            e.printStackTrace();
+        } finally {
+            try {
+                // Đóng kết nối đến cơ sở dữ liệu
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    } else {
+        // Hiển thị thông báo nếu không có hàng nào được chọn
+        System.out.println("Không có hàng nào được chọn");
+    }   
+    
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    
+    
+    
+    private void deleteData() {
+        // Thực hiện logic xóa ở đây...
+
+        // Giả sử nhapvaoInstance là một thể hiện của lớp Nhapvao
+        if (nhapvaoFrame != null) {
+            nhapvaoFrame.updateData();
+        } else {
+            System.out.println("NhapvaoFrame là null");
+        }
+    }
+    
+    
+  
+
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable bangthongke;
@@ -180,4 +364,6 @@ public class Thongke extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+    
 }

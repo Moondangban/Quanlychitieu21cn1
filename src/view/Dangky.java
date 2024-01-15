@@ -247,6 +247,19 @@ public class Dangky extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(rootPane, "Vui lòng điền đầy đủ thông tin");
         return;
         }
+        // Kiểm tra định dạng email sử dụng regex
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        if (!email.matches(emailRegex)) {
+        JOptionPane.showMessageDialog(rootPane, "Địa chỉ email không hợp lệ");
+        return;
+    }
+
+        // Kiểm tra định dạng số điện thoại
+        String phoneRegex = "^[0-9]{10}$";
+        if (!phone.matches(phoneRegex)) {
+        JOptionPane.showMessageDialog(rootPane, "Số điện thoại không hợp lệ (phải là số có 10 chữ số)");
+        return;
+    }
         if(!password.equals(confirmPwd)) {
             JOptionPane.showMessageDialog(rootPane, "Mật khẩu xác nhận không trùng khớp");
         passwordTxt.setText("");

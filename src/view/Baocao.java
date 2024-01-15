@@ -31,33 +31,137 @@ public class Baocao extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bieudoPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        okButton1 = new javax.swing.JButton();
+        thuTextField1 = new javax.swing.JTextField();
+        chiTextField2 = new javax.swing.JTextField();
+        tkThuTextField3 = new javax.swing.JTextField();
+        tkChiTextField4 = new javax.swing.JTextField();
+        sumTextField5 = new javax.swing.JTextField();
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("Bao cao");
+        setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setText("thu");
+
+        jLabel2.setText("chi");
+
+        jLabel3.setText("tk thu");
+
+        jLabel4.setText("tk chi");
+
+        jLabel5.setText("sum");
+
+        okButton1.setText("ok");
+        okButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                okButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout bieudoPanel1Layout = new javax.swing.GroupLayout(bieudoPanel1);
+        bieudoPanel1.setLayout(bieudoPanel1Layout);
+        bieudoPanel1Layout.setHorizontalGroup(
+            bieudoPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bieudoPanel1Layout.createSequentialGroup()
+                .addGroup(bieudoPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(bieudoPanel1Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(bieudoPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1))
+                        .addGap(49, 49, 49)
+                        .addGroup(bieudoPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(thuTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                            .addComponent(chiTextField2)
+                            .addComponent(tkThuTextField3)
+                            .addComponent(tkChiTextField4)))
+                    .addGroup(bieudoPanel1Layout.createSequentialGroup()
+                        .addGap(392, 392, 392)
+                        .addGroup(bieudoPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(okButton1)
+                            .addGroup(bieudoPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(62, 62, 62)
+                                .addComponent(sumTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(207, Short.MAX_VALUE))
+        );
+        bieudoPanel1Layout.setVerticalGroup(
+            bieudoPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(bieudoPanel1Layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(bieudoPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(thuTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(1, 1, 1)
+                .addGroup(bieudoPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(sumTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(bieudoPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(chiTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(52, 52, 52)
+                .addGroup(bieudoPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(tkThuTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
+                .addGroup(bieudoPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(tkChiTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(okButton1)
+                .addContainerGap(55, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(195, 195, 195)
-                .addComponent(jLabel1)
-                .addContainerGap(504, Short.MAX_VALUE))
+            .addComponent(bieudoPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(128, 128, 128)
-                .addComponent(jLabel1)
-                .addContainerGap(343, Short.MAX_VALUE))
+                .addComponent(bieudoPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 207, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void okButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButton1ActionPerformed
+        // TODO add your handling code here:
+    if(evt.getSource() == okButton1){
+            Double a = Double.parseDouble(thuTextField1.getText());
+            Double b = Double.parseDouble(chiTextField2.getText());
+            // Hiển thị kết quả với định dạng số thập phân
+            sumTextField5.setText(String.format("%.2f", a + b));
+            tkThuTextField3.setText(String.format("%d%%",(int) (a / (a + b) * 100)));
+            tkChiTextField4.setText(String.format("%d%%", (int)(b / (a + b) * 100)));
+
+        }
+    }//GEN-LAST:event_okButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel bieudoPanel1;
+    private javax.swing.JTextField chiTextField2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JButton okButton1;
+    private javax.swing.JTextField sumTextField5;
+    private javax.swing.JTextField thuTextField1;
+    private javax.swing.JTextField tkChiTextField4;
+    private javax.swing.JTextField tkThuTextField3;
     // End of variables declaration//GEN-END:variables
 }

@@ -28,7 +28,12 @@ import service.PurseService;
 public class Nhapvao extends javax.swing.JInternalFrame {
     private double totalSum = 0;
     
-    
+    // Phương thức cập nhật dữ liệu
+    public void updateData() {
+        PurseService purseService = new PurseService();
+        String priceText = purseService.getPriceText(Contants.userId);
+        tienLabel.setText(priceText);
+    }
 
 
     public Nhapvao() {
@@ -304,12 +309,17 @@ public class Nhapvao extends javax.swing.JInternalFrame {
             tieuDocument.remove(0, tieuDocument.getLength());;
         } catch (BadLocationException ex) {
         }
+        
+        updateData();
+        
     }//GEN-LAST:event_tinhtongButtonActionPerformed
 
 
     private Object currencyFormat(String string) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    
     
         // Thêm lớp NumberFilter đã cập nhật này vào trong lớp Nhapvao của bạn
     private class NumberFilter extends DocumentFilter {
@@ -359,6 +369,7 @@ public class Nhapvao extends javax.swing.JInternalFrame {
             new Nhapvao().setVisible(true);
         });
     }
+    
     
     
     

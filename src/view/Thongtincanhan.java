@@ -29,7 +29,7 @@ public class Thongtincanhan extends javax.swing.JInternalFrame {
         this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         BasicInternalFrameUI ui = (BasicInternalFrameUI) this.getUI();
         ui.setNorthPane(null);
-        showUserData("thao");
+        showUserData("quanlychitieu");
     }
     private void showUserData(String username) {
         Users user = getUserData(username);
