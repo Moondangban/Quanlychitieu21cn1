@@ -4,8 +4,13 @@
  */
 package view;
 
+import java.sql.Connection;
+import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import service.ConnectionDB;
+import service.Contants;
 
 /**
  *
@@ -27,8 +32,10 @@ public class editFrame extends javax.swing.JFrame {
     
     
     // Thêm một constructor nhận tham số cho dữ liệu
-    public editFrame(String type, String price, String note, String time) {
+    public editFrame(String type, String price, String note, String time, String id) {
         initComponents();
+        
+        hiddenId.setVisible(false);
         
         
         this.thongkeFrame = thongkeFrame; // Thiết lập tham chiếu đến cửa sổ Thongke
@@ -37,9 +44,15 @@ public class editFrame extends javax.swing.JFrame {
         loaitienComboBox.setSelectedItem(type);
         sotienTextField.setText(price);
         noteTextField.setText(note);
+        currentPrice.setText(price);
+        
+        hiddenId.setText(id);
         // Phân tích chuỗi thời gian và đặt nó vào JDateChooser
         try {
-            java.util.Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(time);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = dateFormat.parse(time);
+
+            //java.util.Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(time);
             timeDateChooser.setDate(date);
         } catch (ParseException ex) {
             ex.printStackTrace();
@@ -71,6 +84,8 @@ public class editFrame extends javax.swing.JFrame {
         timeDateChooser = new com.toedter.calendar.JDateChooser();
         huyButton = new javax.swing.JButton();
         luuButton = new javax.swing.JButton();
+        hiddenId = new javax.swing.JLabel();
+        currentPrice = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,6 +115,10 @@ public class editFrame extends javax.swing.JFrame {
             }
         });
 
+        hiddenId.setText("hiddenId");
+
+        currentPrice.setText("currentPrice");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -123,13 +142,20 @@ public class editFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addComponent(hiddenId)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(currentPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(hiddenId)
+                    .addComponent(currentPrice))
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -160,10 +186,51 @@ public class editFrame extends javax.swing.JFrame {
         
         // Lấy dữ liệu từ các thành phần
         String type = (String) loaitienComboBox.getSelectedItem();
+        
+        
+        //List<Object>
+        //Class Type(int ID, String name)
+        //Static List<Type>
+        //Add List(1, "Thu nhập")
+        //Add List(2, "Chi tiêu")
+        //List<Type> types --> 2
+        //type = types.stream().filter(a -> a.name.equals(type.trim())).map(a -> id).get(0);
+        
+        if(type.trim().equals("Thu nhập")){
+            type = "1";
+        }
+        else{
+            type = "2";
+        }
+        
+        
+        
         String price = sotienTextField.getText();
         String note = noteTextField.getText();
-        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timeDateChooser.getDate());
+        //String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(timeDateChooser.getDate());
+        String id = hiddenId.getText();
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+        String time = dateFormat.format(timeDateChooser.getDate());
         
+        ConnectionDB cn = new ConnectionDB();
+        Connection conn = cn.getConnection();
+        
+        try{
+            Statement st = conn.createStatement();
+            
+            String queryUpdate = "update manager_purse set Type = " + type + ", Price = " + price +
+                ", Note = '" + note + "', Time = '"+ time + "' where ID = " + id;
+            st.executeUpdate(queryUpdate);
+            
+            String updatePurseSQL = "update users set Purse = Purse - " + currentPrice.getText() + " + " 
+                    + price + " where ID = " + Contants.userId;
+            st.executeUpdate(updatePurseSQL);
+        }
+        catch(Exception ex){
+            
+        }
         
         // Gọi phương thức để cập nhật dữ liệu trong cửa sổ Thongke
         if (thongkeFrame != null) {
@@ -222,6 +289,8 @@ public class editFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel currentPrice;
+    private javax.swing.JLabel hiddenId;
     private javax.swing.JButton huyButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

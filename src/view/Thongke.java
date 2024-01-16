@@ -71,7 +71,7 @@ public class Thongke extends javax.swing.JInternalFrame {
     
     
     
-    final String[] header = {"Loại","Số tiền","Ghi chú","Thời gian"};
+    final String[] header = {"ID", "Loại","Số tiền","Ghi chú","Thời gian"};
     final DefaultTableModel tb = new DefaultTableModel(header,0);
     
     ConnectionDB cn = new ConnectionDB();
@@ -110,7 +110,7 @@ public class Thongke extends javax.swing.JInternalFrame {
             int number;
             Vector rowVector;
             
-            String sql = "select if(Type = 1, 'Thu', 'Chi') TypeName, if(Type = 1, Price, Price * -1) PriceText, "
+            String sql = "select ID, if(Type = 1, 'Thu', 'Chi') TypeName, if(Type = 1, Price, Price * -1) PriceText, "
                     + " Note, Time "
                     + " from manager_purse "
                     + " where status = 1 and User_ID = " + Contants.userId
@@ -158,17 +158,24 @@ public class Thongke extends javax.swing.JInternalFrame {
 
         setBackground(new java.awt.Color(255, 255, 255));
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
         bangthongke.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Thu/ Chi", "Note", "Time"
+                "loại", "số tiền ", "ghi chú", "ngày "
             }
         ));
+        bangthongke.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                bangthongkeKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(bangthongke);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -196,7 +203,6 @@ public class Thongke extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 813, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -204,17 +210,19 @@ public class Thongke extends javax.swing.JInternalFrame {
                                 .addComponent(editButton)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton2)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(537, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                        .addGap(31, 31, 31))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(editButton)
                     .addComponent(jButton2))
@@ -226,7 +234,7 @@ public class Thongke extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(0, 0, 0)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -253,13 +261,14 @@ public class Thongke extends javax.swing.JInternalFrame {
         int selectedRow = bangthongke.getSelectedRow();
         if (selectedRow != -1) {
             // Lấy dữ liệu từ hàng được chọn
-            String type = (String) tb.getValueAt(selectedRow, 0);
-            String price = (String) tb.getValueAt(selectedRow, 1);
-            String note = (String) tb.getValueAt(selectedRow, 2);
-            String time = (String) tb.getValueAt(selectedRow, 3);
+            String id = (String)tb.getValueAt(selectedRow, 0);
+            String type = (String) tb.getValueAt(selectedRow, 1);
+            String price = (String) tb.getValueAt(selectedRow, 2);
+            String note = (String) tb.getValueAt(selectedRow, 3);
+            String time = (String) tb.getValueAt(selectedRow, 4);
 
             // Mở editFrame và chuyển dữ liệu
-            editFrame edit = new editFrame(type, price, note, time);
+            editFrame edit = new editFrame(type, price, note, time, id);
             edit.setVisible(true);
         } else {
             // Xử lý trường hợp khi không có hàng nào được chọn
@@ -281,20 +290,30 @@ public class Thongke extends javax.swing.JInternalFrame {
             conn = cn.getConnection();
 
             // Lấy giá trị của các cột từ hàng được chọn
-            String type = (String) tb.getValueAt(selectedRow, 0);
-            String priceText = (String) tb.getValueAt(selectedRow, 1);
-            String note = (String) tb.getValueAt(selectedRow, 2);
-            String time = (String) tb.getValueAt(selectedRow, 3);
-
+            String id = (String) tb.getValueAt(selectedRow, 0);
+            String priceText = (String) tb.getValueAt(selectedRow, 2);
+//            String note = (String) tb.getValueAt(selectedRow, 2);
+//            String time = (String) tb.getValueAt(selectedRow, 3);
+            
             // Xóa dữ liệu từ cơ sở dữ liệu
-            String deleteSQL = "DELETE FROM manager_purse WHERE Type = ? AND Price = ? AND Note = ? AND Time = ?";
-            try (PreparedStatement pstmt = conn.prepareStatement(deleteSQL)) {
-                pstmt.setString(1, type);
-                pstmt.setString(2, priceText);
-                pstmt.setString(3, note);
-                pstmt.setString(4, time);
-                pstmt.executeUpdate();
-            }
+            //String deleteSQL = "DELETE FROM manager_purse WHERE Type = ? AND Price = ? AND Note = ? AND Time = ?";
+            
+            //delete 
+            String deleteSQL = "update manager_purse set Status = 0 where ID = " + id;
+            Statement st = conn.createStatement();
+            st.executeUpdate(deleteSQL);
+            
+            //update purse user
+            String updatePurseSQL = "update users set Purse = Purse - (" + priceText + ") where ID = " + Contants.userId;
+            st.executeUpdate(updatePurseSQL);
+            
+//            try (PreparedStatement pstmt = conn.prepareStatement(deleteSQL)) {
+////                pstmt.setString(1, type);
+////                pstmt.setString(2, priceText);
+////                pstmt.setString(3, note);
+////                pstmt.setString(4, time);
+//                pstmt.executeUpdate();
+//            }
 
             // Xóa hàng được chọn từ mô hình bảng
             tb.removeRow(selectedRow);
@@ -335,6 +354,10 @@ public class Thongke extends javax.swing.JInternalFrame {
     }   
     
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void bangthongkeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bangthongkeKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bangthongkeKeyPressed
     
     
     

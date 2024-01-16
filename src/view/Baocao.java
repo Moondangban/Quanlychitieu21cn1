@@ -46,6 +46,8 @@ public class Baocao extends javax.swing.JInternalFrame {
 
         setBackground(new java.awt.Color(255, 255, 255));
 
+        bieudoPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
         jLabel1.setText("thu");
 
         jLabel2.setText("chi");

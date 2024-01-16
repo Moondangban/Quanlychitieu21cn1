@@ -74,11 +74,12 @@ public class Nhapvao extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         tinhtongButton = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(255, 204, 204));
         setFrameIcon(null);
         setInheritsPopupMenu(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setInheritsPopupMenu(true);
         jPanel1.setPreferredSize(new java.awt.Dimension(531, 430));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N

@@ -51,6 +51,30 @@ public class PurseService {
         } catch (Exception e) {
         }
     }
+    public void update(int id, int type, int price, String note, Date time) {
+        conn = cn.getConnection();
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String formattedDate = dateFormat.format(time);
+
+            String sqlUpdate = "UPDATE manager_purse SET Type = " + type +
+                               ", Price = " + price +
+                               ", Time = '" + formattedDate +
+                               "', Note = '" + note +
+                               "' WHERE ID = " + id;
+
+            Statement st = conn.createStatement();
+            int kq = st.executeUpdate(sqlUpdate);
+
+            // Nếu cần cập nhật thông tin khác, bạn có thể thêm vào đây
+
+            st.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     
     
     public List<manager_purse> list(){

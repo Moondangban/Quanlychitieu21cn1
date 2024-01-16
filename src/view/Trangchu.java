@@ -12,7 +12,7 @@ public class Trangchu extends javax.swing.JFrame {
     public Trangchu() {
         System.out.println("Creating Trangchu...");
         initComponents();
-        setTitle("QUAN LY CHI TIEU");
+        setTitle("QUẢN LÝ CHI TIÊU 21CN1");
         DefaultColor =new Color (255,153,153); 
         ClickedColor =new Color (255,204,204); 
         jpnTrangChu.setBackground (DefaultColor); 
@@ -54,7 +54,7 @@ public class Trangchu extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(255, 204, 204));
 
-        jLabel1.setText("QUẢN LÝ THU CHI");
+        jLabel1.setText("QUẢN LÝ CHI TIÊU");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -225,23 +225,23 @@ public class Trangchu extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 204, 204));
 
         Menuname.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        Menuname.setText("MENU");
+        Menuname.setText("TRANG CHỦ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(396, 396, 396)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(374, 374, 374)
                 .addComponent(Menuname, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                .addGap(329, 329, 329))
+                .addGap(351, 351, 351))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(17, 17, 17)
                 .addComponent(Menuname, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                .addGap(40, 40, 40))
+                .addGap(29, 29, 29))
         );
 
         jpnView.setBackground(new java.awt.Color(255, 255, 255));
@@ -298,7 +298,7 @@ public class Trangchu extends javax.swing.JFrame {
         jpnBaocao.setBackground (DefaultColor); 
         jpnThongke. setBackground (DefaultColor);
         jpnCanhan.setBackground(DefaultColor); 
-        Menuname.setText("Nhập Vào");
+        Menuname.setText("NHẬP VÀO");
     }//GEN-LAST:event_jpnTrangChuMousePressed
 
     private void jpnThongkeMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnThongkeMousePressed
@@ -307,7 +307,7 @@ public class Trangchu extends javax.swing.JFrame {
         jpnBaocao.setBackground (DefaultColor); 
         jpnThongke. setBackground (ClickedColor);
         jpnCanhan.setBackground(DefaultColor);
-        Menuname.setText("Thống Kê");
+        Menuname.setText("THỐNG KÊ");
     }//GEN-LAST:event_jpnThongkeMousePressed
 
     private void jpnCanhanMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnCanhanMousePressed
@@ -316,7 +316,7 @@ public class Trangchu extends javax.swing.JFrame {
         jpnBaocao.setBackground (DefaultColor); 
         jpnThongke. setBackground (DefaultColor);
         jpnCanhan.setBackground(ClickedColor);
-        Menuname.setText("Cá nhân");
+        Menuname.setText("CÁ NHÂN");
     }//GEN-LAST:event_jpnCanhanMousePressed
     
     private void jpnTrangChuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnTrangChuMouseClicked
@@ -348,7 +348,7 @@ public class Trangchu extends javax.swing.JFrame {
         jpnBaocao.setBackground (ClickedColor);
         jpnThongke. setBackground (DefaultColor);
         jpnCanhan.setBackground(DefaultColor);
-        Menuname.setText("Báo cáo");
+        Menuname.setText("BÁO CÁO");
     }//GEN-LAST:event_jpnBaocaoMousePressed
 
     private void jpnBaocaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jpnBaocaoMouseClicked
