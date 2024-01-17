@@ -285,9 +285,9 @@ public class Nhapvao extends javax.swing.JInternalFrame {
         // Cập nhật totalSum với tổng của sum hiện tại và kết quả của (a - b)
         totalSum += sum + (a - b);
 
-        // Định dạng số theo kiểu tiền tệ và hiển thị trong tientextField
+        // Định dạng số tiền và hiển thị trong tienLabel
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-        //tienLabel.setText(currencyFormat.format(totalSum));
+        tienLabel.setText(currencyFormat.format(totalSum));
         
         // Kiểm tra nếu totalSum < 0 và đổi màu chữ thành đỏ
         if (totalSum < 0) {
