@@ -80,9 +80,9 @@
                       <Component id="jLabel1" min="-2" pref="62" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" pref="62" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   <Component id="pieChart1" min="-2" pref="513" max="-2" attributes="0"/>
-                  <EmptySpace pref="255" max="32767" attributes="0"/>
+                  <EmptySpace pref="175" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
